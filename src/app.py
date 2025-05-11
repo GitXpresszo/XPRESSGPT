@@ -48,7 +48,7 @@ if "authenticated" not in st.session_state:
 # 🔐 Login
 # --------------------------
 if not st.session_state.authenticated:
-    st.title("AMEYAGPT")
+    st.title("AIGPT")
     with st.form("login_form"):
         st.subheader("Login")
         username_input = st.text_input("Username")
@@ -142,7 +142,7 @@ if st.session_state.authenticated:
         st.rerun()
 
     # Header
-    st.title("🤖 Ameya GPT")
+    st.title("🤖 AIGPT")
     st.success(f"You are logged in as {st.session_state.username}.")
     st.caption(f"🧾 Chat ID: `{st.session_state.chat_id}`")
 
