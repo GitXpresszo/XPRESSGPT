@@ -19,8 +19,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ ./src/
 
 # Create volume for persistent database
-VOLUME ["/data"]
+RUN mkdir -p /data && chmod 777 /data
 ENV DB_PATH=/data/users.db
+VOLUME ["/data"]
 
 # ✅ OPTIONAL: .env fallback - only if it exists locally (for local dev)
 # This will not fail if .env is missing in HF Space

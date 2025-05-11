@@ -25,6 +25,7 @@ init_db()
 migrate_add_chat_name_column()
 load_dotenv()
 
+os.environ["STREAMLIT_HOME"] = "/app/.streamlit"
 os.environ["GOOGLE_API_KEY"] = os.environ.get("GOOGLE_API_KEY", "")
 os.environ["TAVILY_API_KEY"] = os.environ.get("TAVILY_API_KEY", "")
 
