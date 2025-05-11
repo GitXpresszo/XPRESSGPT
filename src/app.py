@@ -16,6 +16,10 @@ from langchain.prompts import PromptTemplate
 from langchain.schema import AIMessage, HumanMessage
 import uuid
 import os
+import warnings
+
+# Suppress LangChain deprecation warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="langchain")
 
 # --------------------------
 # 🔧 Init
