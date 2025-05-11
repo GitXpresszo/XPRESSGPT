@@ -113,7 +113,7 @@ if st.session_state.authenticated:
         st.warning("No chats found. Click ➕ New Chat to start.")
         new_id = f"{st.session_state.username}_{uuid.uuid4().hex[:8]}"
         st.session_state.chat_id = new_id
-        insert_message(st.session_state.username, new_id, "assistant", f"👋 Hello! {st.session_state.username}, your AI assistant. How can I help you today?")
+        insert_message(st.session_state.username, new_id, "assistant", f"👋 Hello! {st.session_state.username}, i am your AI assistant. How can I help you today?")
         st.rerun()  # Important: stop execution
     
     selected_chat_idx = st.sidebar.radio("🗂 Your Chats", list(range(len(chat_ids))), format_func=lambda i: chat_labels[i])
@@ -174,46 +174,41 @@ if st.session_state.authenticated:
 
     prompt = PromptTemplate(
         input_variables=["input", "agent_scratchpad", "tools", "tool_names", "chat_history"],
-        template=
-        """
-            You are AIGPT — a witty, sharp, and slightly sarcastic AI assistant who can use tools only when strictly necessary.
+        template="""
+    You are AIGPT — a witty, sharp, and slightly sarcastic AI assistant. You use tools only when strictly necessary, and rely on memory whenever possible.
 
-            You always respond in the format below:
+    ⚠️ STRICT INSTRUCTIONS:
+    - You must strictly follow the format below.
+    - Never include both a `Final Answer` and an `Action` in the same step.
+    - If you decide to take an Action, stop after the `Observation:` and think again before producing the final answer.
+    - Only provide the `Final Answer` once all necessary actions and observations are complete.
 
-            1. If the input is a simple greeting like "hello", "hi", "hey", etc. → DO NOT use any tool.
-            2. If the answer can be derived from memory/chat history → DO NOT use any tool.
-            3. Use a tool **only** if the question requires current or external data that is not present in memory.
+    -------------------
+    FORMAT (MANDATORY):
 
-            When in doubt, DO NOT use a tool. Respond based on your knowledge or the provided history.
+    Question: {input}
+    Thought: Reason about what to do next.
+    Action: (if needed, choose one from [{tool_names}])
+    Action Input: input for the selected tool
+    Observation: result of the action
+    ... (repeat Thought → Action → Action Input → Observation if needed)
+    Thought: I now know the final answer.
+    Final Answer: your complete and final answer
+    -------------------
 
-            ---
+    💡 Use `TavilySearchResults` ONLY if the answer truly requires current or external internet-based knowledge.
 
-            **Tool usage format (strict):**
+    🧠 Memory (chat history):
+    {chat_history}
 
-            Question: {input}  
-            Thought: Think through what to do next  
-            Action: (only if required, choose from [{tool_names}])  
-            Action Input: input to the tool  
-            Observation: result from the tool  
-            ... (repeat if necessary)  
-            Thought: I now know the final answer  
-            Final Answer: your final answer
+    🧰 Tools available:
+    {tools}
 
-            ---
+    Begin!
 
-            **Your tools:**  
-            {tools}
-
-            **Your memory:**  
-            {chat_history}
-
-            ---
-
-            Begin!
-
-            Question: {input}  
-            Thought: {agent_scratchpad}
-        """
+    Question: {input}
+    Thought: {agent_scratchpad}
+    """
     )
 
     agent = create_react_agent(llm=llm, tools=tools, prompt=prompt)
@@ -223,6 +218,9 @@ if st.session_state.authenticated:
         memory=memory,
         verbose=True,
         handle_parsing_errors=True,
+        max_iterations=3,  # Try max 3 thought-action steps
+        max_execution_time=30,  # 30 seconds max per query
+        early_stopping_method="force",  # Force stop if LLM keeps failing
         prompt_input_keys=["input", "chat_history"]
     )
 
