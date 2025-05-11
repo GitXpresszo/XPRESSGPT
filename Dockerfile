@@ -4,28 +4,28 @@ FROM python:3.9-slim
 # Set working directory
 WORKDIR /app
 
-# System dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies first
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
+# Copy app source
 COPY src/ ./src/
 
-# Create volume for persistent database
+# Create persistent volume for database
 RUN mkdir -p /data && chmod 777 /data
 ENV DB_PATH=/data/users.db
 VOLUME ["/data"]
 
-# Healthcheck
-EXPOSE 8501
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health || exit 1
+# Healthcheck on HF default port 7860
+EXPOSE 7860
+HEALTHCHECK CMD curl --fail http://localhost:7860/_stcore/health || exit 1
 
-# Streamlit will use src/.streamlit/config.toml for port and address
-ENTRYPOINT ["streamlit", "run", "src/app.py"]
+# Run Streamlit on HF-compatible port 7860
+ENTRYPOINT ["streamlit", "run", "src/app.py", "--server.port=7860", "--server.address=0.0.0.0"]
