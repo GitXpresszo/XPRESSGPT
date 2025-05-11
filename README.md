@@ -1,26 +1,34 @@
 ---
-title: AmeyaGPT
+title: AIGPT
 emoji: 🚀
-colorFrom: red
-colorTo: red
+colorFrom: green
+colorTo: green
 sdk: docker
-sdk_version: "1.0"
-app_file: src/streamlit_app.py
+sdk_version: '1.0'
+app_file: src/app.py
 pinned: false
 license: apache-2.0
+thumbnail: >-
+  https://cdn-uploads.huggingface.co/production/uploads/670002ccfed8e4934cebc4b7/r20juvXt8PiTX9S4JEX7G.png
+short_description: AI chatbot with memory, internet access, and agents
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AmeyaGPT</title>
+  <title>AIGPT</title>
 </head>
 <body>
 
-<h1>🚀 AmeyaGPT</h1>
+<h1>🚀 AIGPT</h1>
 
-<p><strong>AmeyaGPT</strong> is an advanced AI chatbot built with <strong>Streamlit</strong>, Dockerized for easy deployment, and equipped with <strong>memory</strong> and <strong>internet access</strong>. It is designed to deliver intelligent conversations, contextual memory, and up-to-date information retrieval.</p>
+<p><strong>AIGPT</strong> is an AI chatbot built with <strong>Streamlit</strong>, Dockerized for easy deployment, and equipped with <strong>memory</strong> and <strong>internet access</strong>. It is designed to deliver intelligent conversations, contextual memory, and up-to-date information retrieval.</p>
+
+<hr>
+
+<h2>👋 About the Creator</h2>
+<p>Hi, I'm <strong>Ameya</strong> — the developer behind AIGPT. I'm passionate about building intelligent systems and practical GenAI applications. Feel free to connect with me on <a href="https://www.linkedin.com/in/ameyasutar/" target="_blank">LinkedIn</a> for collaborations, feedback, or future projects!</p>
 
 <hr>
 
@@ -28,10 +36,9 @@ license: apache-2.0
 <ul>
   <li>💬 <strong>Conversational AI</strong> with persistent memory</li>
   <li>🌐 <strong>Internet access</strong> for real-time data retrieval</li>
-  <li>🧠 <strong>RAG-ready</strong>: Retrieval-Augmented Generation support</li>
+  <li>🧠 <strong>Agentic Approach</strong>: Implements the LangChain ReAct framework</li>
   <li>🐳 <strong>Docker-based</strong> deployment for portability</li>
   <li>📊 Built with <strong>Streamlit</strong> for rapid UI development</li>
-  <li>🔐 Secure .env-based API key management</li>
 </ul>
 
 <hr>
@@ -43,7 +50,7 @@ license: apache-2.0
 ├── requirements.txt
 ├── README.md
 └── src
-    └── streamlit_app.py
+    └── app.py
 </pre>
 
 <hr>
@@ -51,48 +58,52 @@ license: apache-2.0
 <h2>🚀 Getting Started</h2>
 
 <h3>1. Clone the Repository</h3>
-<pre><code>git clone https://github.com/your-username/AmeyaGPT.git
-cd AmeyaGPT
-</code></pre>
+<pre><code>git clone https://huggingface.co/spaces/DevAmeya/AIGPT</code></pre>
 
 <h3>2. Add Environment Variables</h3>
 <p>Create a <code>.env</code> file in the root directory:</p>
-<pre><code>API_KEY=your_api_key_here
-SEARCH_ENDPOINT=your_search_endpoint
+<pre><code>
+GOOGLE_API_KEY=your_api_key_here
+TAVILY_API_KEY=your_search_endpoint
 </code></pre>
 
 <h3>3. Build the Docker Image</h3>
-<pre><code>docker build -t ameyagpt .
-</code></pre>
+<pre><code>docker build -t aigpt .</code></pre>
 
 <h3>4. Run the App</h3>
-<pre><code>docker run -p 8501:8501 --env-file .env ameyagpt
-</code></pre>
-<p>Then open your browser at <a href="http://localhost:8501">http://localhost:8501</a>.</p>
+<pre><code>docker run -p 8501:8501 --env-file .env aigpt</code></pre>
+
+<p>Then open your browser at <a href="http://localhost:8501" target="_blank">http://localhost:8501</a>.</p>
 
 <hr>
 
 <h2>📦 Dependencies</h2>
 <ul>
-  <li><code>streamlit</code></li>
-  <li><code>requests</code></li>
-  <li><code>openai</code> or <code>google-generativeai</code></li>
+  <li><code>altair</code></li>
+  <li><code>pandas</code></li>
+  <li><code>google-generativeai</code></li>
   <li><code>python-dotenv</code></li>
-  <li><code>langchain</code> (optional)</li>
+  <li><code>streamlit</code></li>
+  <li><code>streamlit-authenticator==0.2.3</code></li>
+  <li><code>PyYAML</code></li>
+  <li><code>bcrypt</code></li>
+  <li><code>langchain_google_genai</code></li>
+  <li><code>langchain</code></li>
+  <li><code>langchain-community</code></li>
+  <li><code>duckduckgo-search</code></li>
+  <li><code>langchain-tavily</code></li>
 </ul>
 
 <p>Install all dependencies via:</p>
-<pre><code>pip install -r requirements.txt
-</code></pre>
+<pre><code>pip install -r requirements.txt</code></pre>
 
 <hr>
 
 <h2>📚 Customization</h2>
 <p>Edit the main file:</p>
-<pre><code>/src/streamlit_app.py
-</code></pre>
+<pre><code>/src/app.py</code></pre>
 
-<p>Update components like:</p>
+<p>You can customize:</p>
 <ul>
   <li>Model backend (OpenAI, Gemini, Ollama, etc.)</li>
   <li>Memory module (LangChain, custom DB, ChromaDB, etc.)</li>
@@ -107,12 +118,12 @@ SEARCH_ENDPOINT=your_search_endpoint
 <hr>
 
 <h2>🤝 Contributing</h2>
-<p>Pull requests are welcome. For major changes, open an issue first to discuss what you'd like to change.</p>
+<p>Pull requests are welcome. For major changes, please open an issue first to discuss your proposal.</p>
 
 <hr>
 
 <h2>🙋‍♂️ Questions?</h2>
-<p>Check out <a href="https://docs.streamlit.io">Streamlit Docs</a> or open an issue on this repo.</p>
+<p>Check out the <a href="https://docs.streamlit.io" target="_blank">Streamlit Docs</a> or raise an issue on this repository.</p>
 
 </body>
 </html>
