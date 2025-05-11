@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies first (for Docker caching)
+# Install Python dependencies first
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -22,8 +22,9 @@ COPY src/ ./src/
 VOLUME ["/data"]
 ENV DB_PATH=/data/users.db
 
-# Copy .env file if present (handled by HF secrets, optional fallback)
-COPY .env .env
+# ✅ OPTIONAL: .env fallback - only if it exists locally (for local dev)
+# This will not fail if .env is missing in HF Space
+# Don't COPY it — read env vars directly inside app.py instead
 
 # Streamlit settings for healthcheck
 EXPOSE 8501
