@@ -130,7 +130,7 @@ if st.session_state.authenticated:
     if st.sidebar.button("➕ New Chat"):
         new_id = f"{st.session_state.username}_{uuid.uuid4().hex[:8]}"
         st.session_state.chat_id = new_id
-        insert_message(st.session_state.username, new_id, "assistant", f"👋 Hello! {st.session_state.username}, your AI assistant. How can I help you today?")
+        insert_message(st.session_state.username, new_id, "assistant", f"👋 Hello! {st.session_state.username}, i am your AIGPT. How can I help you today?")
         st.rerun()
 
     # Logout
