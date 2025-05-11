@@ -17,7 +17,6 @@ short_description: AI chatbot with memory, internet access, and agents
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AIGPT</title>
 </head>
 <body>
 
