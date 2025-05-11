@@ -1,3 +1,15 @@
+---
+title: AmeyaGPT
+emoji: 🚀
+colorFrom: red
+colorTo: red
+sdk: docker
+sdk_version: "1.0"
+app_file: src/streamlit_app.py
+pinned: false
+license: apache-2.0
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
