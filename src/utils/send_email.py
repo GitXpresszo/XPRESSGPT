@@ -1,10 +1,14 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import os
 
 def send_email_notification(to_email, username):
-    sender_email = "ameyasutar1@gmail.com"
-    sender_password = "ezep tiqc ttvq auol"
+    
+    sender_email = os.environ.get("SENDER_EMAIL")
+    sender_password = os.environ.get("SENDER_PASSWORD")
+    if not sender_email or not sender_password:
+        raise ValueError("Missing email credentials in environment variables.")
 
     subject = "New User Signup Notification"
     body = f"A new user has signed up: {username} ({to_email})"
