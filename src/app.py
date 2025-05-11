@@ -140,7 +140,7 @@ if st.session_state.authenticated:
     # 🧠 Load memory from DB
     # --------------------------
     def get_langchain_messages(chat_id):
-        raw = get_chat_history(chat_id, n=100)
+        raw = get_chat_history(chat_id, n=3)
         return [HumanMessage(content=m) if r == "user" else AIMessage(content=m) for r, m in raw]
 
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
