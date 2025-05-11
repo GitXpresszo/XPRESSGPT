@@ -83,7 +83,10 @@ if not st.session_state.authenticated:
                 st.error("Username already exists.")
             else:
                 if create_user(new_username, new_name, new_email, new_password):
-                    send_email_notification(new_email, new_username)
+                    try:
+                        send_email_notification(new_email, new_username)
+                    except Exception as e:
+                        logging.error(f"Failed to send email notification: {e}")
                     st.success("Registration successful. Please login.")
                 else:
                     st.error("User creation failed.")
