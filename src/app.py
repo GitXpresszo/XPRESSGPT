@@ -17,6 +17,8 @@ from utils.dbutils import (
     get_user_by_username, insert_message, get_chat_history, generate_chat_id,
     get_all_chat_ids_for_user, update_chat_name, delete_chat, migrate_add_chat_name_column
 )
+from langchain_community.callbacks.streamlit.streamlit_callback_handler import StreamlitCallbackHandler
+
 
 # Logging & Warnings
 logging.basicConfig(level=logging.INFO)
