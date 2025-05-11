@@ -87,6 +87,7 @@ if not st.session_state.authenticated:
                         send_email_notification(new_email, new_username)
                     except Exception as e:
                         logging.error(f"Failed to send email notification: {e}")
+                        st.error("Email Could not be sent but the user has been created")
                     st.success("Registration successful. Please login.")
                 else:
                     st.error("User creation failed.")
