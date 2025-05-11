@@ -23,6 +23,13 @@ RUN mkdir -p /data && chmod 777 /data
 ENV DB_PATH=/data/users.db
 VOLUME ["/data"]
 
+# === ✅ FIX for .streamlit permission error ===
+ENV STREAMLIT_HOME=/app/.streamlit
+ENV STREAMLIT_CONFIG_DIR=$STREAMLIT_HOME
+ENV STREAMLIT_INSTALLATION_ID_FILE=$STREAMLIT_HOME/installation_id_v4
+ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+RUN mkdir -p /app/.streamlit && chmod 777 /app/.streamlit
+
 # Healthcheck on HF default port 7860
 EXPOSE 7860
 HEALTHCHECK CMD curl --fail http://localhost:7860/_stcore/health || exit 1

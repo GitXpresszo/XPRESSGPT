@@ -1,11 +1,11 @@
-altair
-pandas
-streamlit
-streamlit-authenticator==0.2.3
-PyYAML
-bcrypt
-langchain_google_genai
-langchain
-langchain-community
-duckduckgo-search
-langchain-tavily
+    altair
+    pandas
+    streamlit
+    streamlit-authenticator==0.2.3
+    PyYAML
+    bcrypt
+    langchain_google_genai
+    langchain
+    langchain-community
+    duckduckgo-search
+    langchain-tavily
