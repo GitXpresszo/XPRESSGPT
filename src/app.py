@@ -17,7 +17,8 @@ from langchain.schema import AIMessage, HumanMessage
 import uuid
 import os
 import warnings
-
+import logging
+logging.basicConfig(level=logging.DEBUG)
 # Suppress LangChain deprecation warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning, module="langchain")
 

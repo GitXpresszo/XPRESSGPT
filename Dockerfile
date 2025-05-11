@@ -23,13 +23,9 @@ RUN mkdir -p /data && chmod 777 /data
 ENV DB_PATH=/data/users.db
 VOLUME ["/data"]
 
-# ✅ OPTIONAL: .env fallback - only if it exists locally (for local dev)
-# This will not fail if .env is missing in HF Space
-# Don't COPY it — read env vars directly inside app.py instead
-
-# Streamlit settings for healthcheck
+# Healthcheck
 EXPOSE 8501
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health || exit 1
 
-# Run the app
-ENTRYPOINT ["streamlit", "run", "src/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Streamlit will use src/.streamlit/config.toml for port and address
+ENTRYPOINT ["streamlit", "run", "src/app.py"]
