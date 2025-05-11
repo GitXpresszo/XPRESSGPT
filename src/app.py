@@ -77,12 +77,17 @@ if not st.session_state.authenticated:
         confirm_password = st.text_input("Confirm Password", type="password")
 
         if st.button("Register"):
+            logging.info(f"Attempting to register user: {new_username}")
             if new_password != confirm_password:
                 st.error("Passwords do not match.")
+                logging.warning("Password mismatch during registration.")
             elif get_user_by_username(new_username):
                 st.error("Username already exists.")
+                logging.warning("Username already exists.")
             else:
                 if create_user(new_username, new_name, new_email, new_password):
+                    st.success("User Created now Sending Confirmation Email")
+                    logging.info("User created successfully.")
                     try:
                         send_email_notification(new_email, new_username)
                     except Exception as e:
@@ -91,6 +96,7 @@ if not st.session_state.authenticated:
                     st.success("Registration successful. Please login.")
                 else:
                     st.error("User creation failed.")
+                    logging.error("User creation failed in DB.")
 
 # --------------------------
 # ✅ Authenticated View
