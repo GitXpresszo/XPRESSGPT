@@ -1,38 +1,41 @@
+import os
+import uuid
+import warnings
+import logging
 import streamlit as st
+from dotenv import load_dotenv
+from langchain.schema import AIMessage, HumanMessage
+from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.memory import ConversationBufferMemory
+from langchain.prompts import PromptTemplate
+from langchain.agents import AgentExecutor, create_react_agent
 from utils.send_email import send_email_notification
 from utils.dbutils import (
     init_db, create_user, verify_user_credentials,
-    get_user_by_username, insert_message, get_chat_history, generate_chat_id, get_all_chat_ids_for_user, update_chat_name, delete_chat,migrate_add_chat_name_column
+    get_user_by_username, insert_message, get_chat_history, generate_chat_id,
+    get_all_chat_ids_for_user, update_chat_name, delete_chat, migrate_add_chat_name_column
 )
-from langchain import hub
-from langchain.agents import AgentExecutor, create_react_agent
-from langchain_community.agent_toolkits.load_tools import load_tools
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_community.callbacks.streamlit.streamlit_callback_handler import StreamlitCallbackHandler
-from dotenv import load_dotenv
-from langchain_community.tools.tavily_search import TavilySearchResults
-from langchain.memory import ConversationBufferMemory
-from langchain.prompts import PromptTemplate
-from langchain.schema import AIMessage, HumanMessage
-import uuid
-import os
-import warnings
-import logging
-logging.basicConfig(level=logging.DEBUG)
-# Suppress LangChain deprecation warnings
+
+# Logging & Warnings
+logging.basicConfig(level=logging.INFO)
 warnings.filterwarnings("ignore", category=DeprecationWarning, module="langchain")
 
-# --------------------------
-# 🔧 Init
-# --------------------------
-
+# ✅ Init DB & Env
 init_db()
 migrate_add_chat_name_column()
 load_dotenv()
 
-os.environ["STREAMLIT_HOME"] = "/app/.streamlit"
+# ✅ Set env keys (local fallback)
 os.environ["GOOGLE_API_KEY"] = os.environ.get("GOOGLE_API_KEY", "")
 os.environ["TAVILY_API_KEY"] = os.environ.get("TAVILY_API_KEY", "")
+
+if not os.environ["GOOGLE_API_KEY"]:
+    logging.warning("⚠️ GOOGLE_API_KEY is missing.")
+if not os.environ["TAVILY_API_KEY"]:
+    logging.warning("⚠️ TAVILY_API_KEY is missing.")
+
 
 if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
