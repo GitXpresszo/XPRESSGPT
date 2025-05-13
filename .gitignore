@@ -8,3 +8,4 @@ __pycache__/
 .env
 .cache/
 .DS_Store
+.src/AIGPT.png
