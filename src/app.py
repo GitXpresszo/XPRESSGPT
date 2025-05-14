@@ -32,6 +32,8 @@ load_dotenv()
 # ✅ Set env keys (local fallback)
 os.environ["GOOGLE_API_KEY"] = os.environ.get("GOOGLE_API_KEY", "")
 os.environ["TAVILY_API_KEY"] = os.environ.get("TAVILY_API_KEY", "")
+APP_STATUS = os.environ.get("APP_STATUS", "ON")
+logging.warning(f"🔍 APP_STATUS = {APP_STATUS}")
 
 if not os.environ["GOOGLE_API_KEY"]:
     logging.warning("⚠️ GOOGLE_API_KEY is missing.")
@@ -43,6 +45,13 @@ if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
     st.session_state.username = None
     st.session_state.name = None
+
+# --------------------------
+# 🔐 App Availability Control
+# --------------------------
+if APP_STATUS.strip().upper() != "ON":
+    st.error("🚫 The app is currently down. Please try again later.")
+    st.stop()  # Stop execution early if disabled
 
 # --------------------------
 # 🔐 Login
