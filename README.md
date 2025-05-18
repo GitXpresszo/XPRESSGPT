@@ -1,5 +1,5 @@
 ---
-title: AIGPT
+title: XPRESSGPT
 emoji: 🚀
 colorFrom: green
 colorTo: green
